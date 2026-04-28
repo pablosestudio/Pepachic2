@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPA CHIC — Alicante</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #1a1410;
+  --white: #faf7f2;
+  --acid: #d4520a;
+  --blush: #f0bfaa;
+  --rust: #c44a2b;
+  --gray: #f0ebe3;
+  --midgray: #e0d8ce;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--rust);
+  border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.2s, height 0.2s;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(196,74,43,0.35);
+  border-radius: 50%;
+  position: fixed; pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.25s, height 0.25s, border-color 0.2s;
+}
+body:has(a:hover) .cursor { width: 6px; height: 6px; }
+body:has(a:hover) .cursor-ring { width: 50px; height: 50px; border-color: var(--rust); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 2.5rem;
+  background: rgba(250,247,242,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 0.5px solid rgba(180,140,110,0.15);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 0.08em;
+  color: var(--black); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--black); text-decoration: none; font-weight: 500;
+  opacity: 0.5; transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0 2.5rem;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: var(--white);
+  z-index: 0;
+}
+
+.hero-bg-shape {
+  position: absolute;
+  top: -10%; right: -5%;
+  width: 55%; height: 110%;
+  background: linear-gradient(160deg, #ede5da 0%, #e0d3c4 100%);
+  clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+  z-index: 1;
+}
+
+.hero-bg-accent {
+  position: absolute;
+  top: 30%; right: 15%;
+  width: 320px; height: 420px;
+  background: linear-gradient(135deg, var(--blush) 0%, var(--rust) 100%);
+  z-index: 2;
+  opacity: 0.9;
+}
+
+.hero-content {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 4rem;
+  padding-top: 8rem;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--rust); font-weight: 500; margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::after {
+  content: ''; display: block; width: 40px; height: 1px; background: var(--rust);
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 12vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: var(--black);
+  margin-bottom: 0;
+}
+.hero h1 .line-accent {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--black);
+  opacity: 0.15;
+}
+.hero h1 .line-italic {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 0.75em;
+  color: var(--blush);
+  -webkit-text-stroke: 0;
+}
+
+.hero-bottom {
+  position: relative; z-index: 10;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 2rem 0 3rem;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
+}
+
+.hero-desc {
+  max-width: 280px;
+  font-size: 0.9rem; line-height: 1.8;
+  color: rgba(0,0,0,0.45); font-weight: 300;
+}
+
+.hero-cta-group { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
+
+.btn-acid {
+  background: var(--rust); color: var(--white);
+  padding: 1rem 2.5rem; border-radius: 0;
+  font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 500; text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, transform 0.2s;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+.btn-acid:hover { background: var(--black); transform: translateX(-4px); }
+
+.hero-season {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.8rem; letter-spacing: 0.15em;
+  color: rgba(0,0,0,0.25);
+}
+
+/* TICKER */
+.ticker {
+  background: var(--rust); color: var(--white);
+  padding: 0.7rem 0; overflow: hidden;
+}
+.ticker-inner {
+  display: flex; gap: 0;
+  animation: tick 15s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.15em;
+  padding: 0 2rem; display: flex; align-items: center; gap: 2rem;
+}
+.ticker-item::after { content: '✦'; opacity: 0.5; }
+
+/* COLECCIÓN */
+.collection {
+  padding: 6rem 2.5rem;
+  background: var(--white);
+}
+
+.col-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 4rem;
+}
+.col-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5rem); letter-spacing: 0.02em;
+  color: var(--black);
+}
+.col-header h2 span {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 0.65em;
+  color: var(--rust);
+}
+.col-header a {
+  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--rust); text-decoration: none; font-weight: 500;
+  border-bottom: 1px solid var(--rust); padding-bottom: 3px;
+  transition: opacity 0.2s;
+}
+.col-header a:hover { opacity: 0.6; }
+
+.products {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.5px;
+}
+
+.product-card {
+  position: relative; overflow: hidden; cursor: none;
+  background: var(--gray);
+}
+
+.product-card:first-child {
+  grid-row: 1 / 3;
+}
+
+.product-img {
+  width: 100%; height: 100%;
+  min-height: 280px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.6s ease;
+}
+.product-card:hover .product-img { transform: scale(1.04); }
+
+.p1 .product-img { background: linear-gradient(145deg, #3a2a22, #6b3d2e); min-height: 580px; }
+.p2 .product-img { background: linear-gradient(145deg, #1e2a38, #2e4a6b); }
+.p3 .product-img { background: linear-gradient(145deg, #2a1e38, #4a2e6b); }
+.p4 .product-img { background: linear-gradient(145deg, #1e3830, #2e6b5a); }
+.p5 .product-img { background: linear-gradient(145deg, #38301e, #6b582e); }
+
+.product-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+  padding: 1.5rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.product-tag-small {
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--acid); font-weight: 500; margin-bottom: 0.3rem;
+}
+.product-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem; color: var(--white); margin-bottom: 0.3rem;
+}
+.product-price { font-size: 0.85rem; color: rgba(255,255,255,0.5); font-weight: 300; }
+
+.product-badge {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  background: var(--acid); color: var(--black);
+  width: 50px; height: 50px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 500; text-align: center; line-height: 1.2;
+}
+
+/* MANIFIESTO */
+.manifesto {
+  padding: 8rem 2.5rem;
+  background: var(--white);
+  color: var(--black);
+  position: relative; overflow: hidden;
+}
+.manifesto-bg-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18vw; letter-spacing: -0.02em;
+  color: rgba(0,0,0,0.04);
+  white-space: nowrap; pointer-events: none;
+  user-select: none;
+}
+.manifesto-inner {
+  position: relative; z-index: 2;
+  max-width: 700px; margin: 0 auto; text-align: center;
+}
+.manifesto-label {
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rust); font-weight: 500; margin-bottom: 2rem;
+}
+.manifesto h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-style: italic; line-height: 1.3;
+  color: var(--black); margin-bottom: 2rem;
+}
+.manifesto p {
+  font-size: 1rem; line-height: 1.9;
+  color: rgba(0,0,0,0.6); font-weight: 300;
+  margin-bottom: 3rem;
+}
+.btn-dark {
+  background: var(--black); color: var(--white);
+  padding: 1rem 2.5rem;
+  font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 500; text-decoration: none;
+  display: inline-block; transition: background 0.2s;
+}
+.btn-dark:hover { background: var(--rust); }
+
+/* INFO */
+.info-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--gray);
+}
+.info-block {
+  padding: 3.5rem 2.5rem;
+  border-right: 0.5px solid rgba(0,0,0,0.08);
+}
+.info-block:last-child { border-right: none; }
+.info-block-label {
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rust); font-weight: 500; margin-bottom: 1.2rem;
+}
+.info-block h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 0.05em;
+  color: var(--black); margin-bottom: 1rem;
+}
+.info-block p, .info-block a {
+  font-size: 0.85rem; line-height: 1.9;
+  color: rgba(0,0,0,0.45); font-weight: 300;
+  display: block; text-decoration: none;
+  transition: color 0.2s;
+}
+.info-block a:hover { color: var(--rust); }
+
+/* INSTAGRAM */
+.ig-section {
+  padding: 6rem 2.5rem;
+  background: var(--white);
+}
+.ig-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; letter-spacing: 0.05em; color: var(--black);
+}
+.ig-header a {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--rust); text-decoration: none; font-weight: 500;
+  transition: gap 0.2s;
+}
+.ig-header a:hover { gap: 14px; }
+
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+.ig-item {
+  aspect-ratio: 1; position: relative; overflow: hidden; cursor: none;
+}
+.ig-item:hover .ig-over { opacity: 1; }
+.ig-over {
+  position: absolute; inset: 0;
+  background: rgba(196,74,43,0.15);
+  border: 2px solid var(--rust);
+  opacity: 0; transition: opacity 0.25s;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+}
+.ig1 { background: linear-gradient(135deg, #3a2a22, #7a5040); }
+.ig2 { background: linear-gradient(135deg, #1e2a38, #3e5a7a); }
+.ig3 { background: linear-gradient(135deg, #2a1e38, #5a3e7a); }
+.ig4 { background: linear-gradient(135deg, #1e3a30, #3e7a60); }
+.ig5 { background: linear-gradient(135deg, #3a301e, #7a6040); }
+
+/* FOOTER */
+footer {
+  background: var(--black);
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+  padding: 3rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 0.08em;
+  color: var(--white);
+}
+.footer-center {
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2); text-align: center;
+}
+.footer-right {
+  display: flex; gap: 1.5rem; justify-content: flex-end;
+}
+.footer-right a {
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-right a:hover { color: var(--blush); }
+
+/* DEMO BADGE */
+.demo-badge {
+  position: fixed; bottom: 1.5rem; left: 1.5rem;
+  background: var(--rust); color: var(--white);
+  padding: 0.5rem 1rem; font-size: 0.7rem;
+  font-weight: 500; letter-spacing: 0.08em;
+  z-index: 999;
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0% 100%);
+  animation: fadeInUp 1s 1s both;
+}
+
+/* ANIMATIONS */
+@keyframes tick {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a class="nav-logo" href="#">Pepa Chic</a>
+  <ul class="nav-links">
+    <li><a href="#coleccion">Colección</a></li>
+    <li><a href="#nosotras">Nosotras</a></li>
+    <li><a href="#tienda">Tienda</a></li>
+    <li><a href="#ig">Instagram</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-shape"></div>
+  <div class="hero-bg-accent"></div>
+
+  <div class="hero-content reveal">
+    <div class="hero-eyebrow">Nueva temporada 2026</div>
+    <h1>
+      MODA<br>
+      <span class="line-italic">femenina</span><br>
+      <span class="line-accent">SIN</span><br>
+      LÍMITES
+    </h1>
+  </div>
+
+  <div class="hero-bottom reveal">
+    <p class="hero-desc">Prendas con carácter para mujeres que no pasan desapercibidas. Centro de Alicante.</p>
+    <div class="hero-cta-group">
+      <a class="btn-acid" href="#coleccion">Ver colección →</a>
+      <span class="hero-season">SS26 — C/ Gerona 4, Alicante</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Novedades cada semana</span>
+    <span class="ticker-item">Moda femenina</span>
+    <span class="ticker-item">Centro Alicante</span>
+    <span class="ticker-item">Tallas S–XL</span>
+    <span class="ticker-item">Envíos España</span>
+    <span class="ticker-item">Desde 1998</span>
+    <span class="ticker-item">Novedades cada semana</span>
+    <span class="ticker-item">Moda femenina</span>
+    <span class="ticker-item">Centro Alicante</span>
+    <span class="ticker-item">Tallas S–XL</span>
+    <span class="ticker-item">Envíos España</span>
+    <span class="ticker-item">Desde 1998</span>
+  </div>
+</div>
+
+<!-- COLECCIÓN -->
+<section class="collection reveal" id="coleccion">
+  <div class="col-header">
+    <h2>Colección <span>actual</span></h2>
+    <a href="#ig">Ver todo →</a>
+  </div>
+  <div class="products">
+    <div class="product-card p1">
+      <div class="product-img"></div>
+      <div class="product-overlay">
+        <div class="product-tag-small">Destacado</div>
+        <div class="product-name">Vestido editorial rust</div>
+        <div class="product-price">desde 89€</div>
+      </div>
+      <div class="product-badge">New Drop</div>
+    </div>
+    <div class="product-card p2">
+      <div class="product-img"></div>
+      <div class="product-overlay">
+        <div class="product-tag-small">Tendencia</div>
+        <div class="product-name">Blazer navy</div>
+        <div class="product-price">desde 65€</div>
+      </div>
+    </div>
+    <div class="product-card p3">
+      <div class="product-img"></div>
+      <div class="product-overlay">
+        <div class="product-tag-small">Más vendido</div>
+        <div class="product-name">Conjunto malva</div>
+        <div class="product-price">desde 72€</div>
+      </div>
+    </div>
+    <div class="product-card p4">
+      <div class="product-img"></div>
+      <div class="product-overlay">
+        <div class="product-tag-small">Nueva entrada</div>
+        <div class="product-name">Blusa seda verde</div>
+        <div class="product-price">desde 48€</div>
+      </div>
+    </div>
+    <div class="product-card p5">
+      <div class="product-img"></div>
+      <div class="product-overlay">
+        <div class="product-tag-small">Colección</div>
+        <div class="product-name">Falda midi ocre</div>
+        <div class="product-price">desde 55€</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFIESTO -->
+<section class="manifesto reveal" id="nosotras">
+  <div class="manifesto-bg-text">PEPA</div>
+  <div class="manifesto-inner">
+    <div class="manifesto-label">Nuestra filosofía</div>
+    <h2>"La moda es el lenguaje más inmediato que tenemos para decir quiénes somos."</h2>
+    <p>En Pepa Chic llevamos desde 1998 ayudando a mujeres reales a encontrar su estilo. No seguimos tendencias ciegamente — elegimos prendas que funcionan en la vida real, con cuerpos reales y actitudes distintas. Cada nueva entrada es seleccionada a mano.</p>
+    <a class="btn-dark" href="#tienda">Visítanos en Alicante</a>
+  </div>
+</section>
+
+<!-- INFO -->
+<div class="info-strip reveal" id="tienda">
+  <div class="info-block">
+    <div class="info-block-label">Dónde</div>
+    <h3>La tienda</h3>
+    <p>C/ Gerona 4, bajo<br>03001 Alicante<br>Junto a la Rambla</p>
+  </div>
+  <div class="info-block">
+    <div class="info-block-label">Cuándo</div>
+    <h3>Horario</h3>
+    <p>Lun–Vie · 9:00–21:00<br>Sábado · 10:00–14:00<br>Domingo · cerrado</p>
+  </div>
+  <div class="info-block">
+    <div class="info-block-label">Contacto</div>
+    <h3>Hablamos</h3>
+    <a href="tel:+34965598553">965 598 553</a>
+    <a href="mailto:info@pepachic.es">info@pepachic.es</a>
+    <a href="https://instagram.com/pepachicalicante">@pepachicalicante</a>
+  </div>
+</div>
+
+<!-- INSTAGRAM -->
+<section class="ig-section reveal" id="ig">
+  <div class="ig-header">
+    <h2>@PEPACHICALICANTE</h2>
+    <a href="https://instagram.com/pepachicalicante" target="_blank">Seguir en Instagram →</a>
+  </div>
+  <div class="ig-grid">
+    <div class="ig-item ig1"><div class="ig-over">↗</div></div>
+    <div class="ig-item ig2"><div class="ig-over">↗</div></div>
+    <div class="ig-item ig3"><div class="ig-over">↗</div></div>
+    <div class="ig-item ig4"><div class="ig-over">↗</div></div>
+    <div class="ig-item ig5"><div class="ig-over">↗</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Pepa Chic</div>
+  <div class="footer-center">© 2026 · Alicante · Todos los derechos reservados</div>
+  <div class="footer-right">
+    <a href="#coleccion">Colección</a>
+    <a href="#tienda">Tienda</a>
+    <a href="#ig">Instagram</a>
+  </div>
+</footer>
+
+<div class="demo-badge">✦ Demo — ejemplo de web</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
